@@ -6,7 +6,7 @@ namespace battle_ships {
     class Square {
     	private Square.Mark Front;
 	private Square.Mark Back;
-	public enum Mark {CARRIER, BATTLESHIP, CRUISER,  SUBMARINE, DESTROYER, WATER, MISSED, HIT, NOT_SET, SUNK}
+	public enum Mark {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER, WATER, MISSED, HIT, NOT_SET, SUNK}
 	public void setVisible(){
 		this.Front = this.Back;
 	}
