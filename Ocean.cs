@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+
 
 namespace battle_ships {
+	
     class Ocean {
     	private Random random = new Random();
 		private Square[,] Board = new Square[10,10];
@@ -32,12 +36,53 @@ namespace battle_ships {
 				Console.WriteLine("");
 			}
 		}
-		public bool DebugPutRandomlyShip(Square.Mark type){
-			bool result = true;
-			bool horizontal = false;
-			if(random.Next(2)==1){
-			horizontal = true;
-			};
+		public int[] GetShipPosition() {
+			
+            int positionX = -1;
+            int positionY = -1;
+            while (positionX == -1 || positionY == -1) {
+                Console.WriteLine("Position:");
+                string position = Console.ReadLine().ToUpper();
+
+                if (position != null && isLetter(position[0].ToString())) {
+                    positionY = (int) position[0] - 65;
+                    if (positionY >= 10) {
+                        positionY = -1;
+                        Console.WriteLine("Column index exceeded board dimension");
+                    }
+                    if (position.Substring(1) != "" && isNumeric(position.Substring(1))) {
+                        positionX = Int32.Parse(position.Substring(1)) - 1;
+                        if (positionX >= 10) {
+                            positionX = -1;
+                            Console.WriteLine("Row index exceeded board dimension");
+                        }
+                    } else {
+                        Console.WriteLine("Invalid row number");
+                    }
+                } else {
+                    Console.WriteLine("First input character must be a letter indcating column");
+                }
+            }
+
+            int[] positionInput = new int[2] { positionX, positionY };
+
+            return positionInput;
+
+        }
+
+		public static bool isNumeric(string strToCheck) {
+            Regex rg = new Regex(@"^[0-9\s,]*$");
+            return rg.IsMatch(strToCheck);
+        }
+
+        public static bool isLetter(string strToCheck) {
+            Regex rg = new Regex(@"^[a-zA-Z\s,]*$");
+            return rg.IsMatch(strToCheck);
+        }
+		
+
+		public bool DebugPutShip(Square.Mark type, bool isShipHorizontal){
+
 			int positionX = random.Next(10);
 			int positionY = random.Next(10);
 			int initx = positionX;
@@ -56,7 +101,7 @@ namespace battle_ships {
 			var endX = positionX;
 			var endY = positionY;
 
-			if (!horizontal) {
+			if (!isShipHorizontal) {
 				endY += size-1;
 			}
 			else {
@@ -79,7 +124,7 @@ namespace battle_ships {
 				}
 			}
 
-			if(horizontal){
+			if(isShipHorizontal){
 				for(int cx = initx; cx<size+initx; cx++){
 					Board[cx, inity].SetMark(type);
 				}
@@ -91,11 +136,13 @@ namespace battle_ships {
 			return true;
 		}
 
+		
+
 		private static bool IsInsideBoard(int boardSize, int xMin, int yMin, int xMax, int yMax) {
 			if (xMin < 0 || yMin < 0 || xMax > boardSize || yMax > boardSize) {
 					return false;
 			}
 			return true;
 		}
-    }
+	}
 }
