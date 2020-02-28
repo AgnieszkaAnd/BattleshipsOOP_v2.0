@@ -36,40 +36,47 @@ namespace battle_ships {
 				Console.WriteLine("");
 			}
 		}
-		public int[] GetShipPosition() {
-			
-            int positionX = -1;
-            int positionY = -1;
-            while (positionX == -1 || positionY == -1) {
-                Console.WriteLine("Position:");
-                string position = Console.ReadLine().ToUpper();
+		public int[] GetShipPosition(PlayerType type, string playerInput) {
+			if (type == PlayerType.HUMAN) {
+				int positionX = -1;
+				int positionY = -1;
+				while (positionX == -1 || positionY == -1) {
+					Console.WriteLine("Position:");
+					string position = Console.ReadLine().ToUpper();
 
-                if (position != null && isLetter(position[0].ToString())) {
-                    positionY = (int) position[0] - 65;
-                    if (positionY >= 10) {
-                        positionY = -1;
-                        Console.WriteLine("Column index exceeded board dimension");
-                    }
-                    if (position.Substring(1) != "" && isNumeric(position.Substring(1))) {
-                        positionX = Int32.Parse(position.Substring(1)) - 1;
-                        if (positionX >= 10) {
-                            positionX = -1;
-                            Console.WriteLine("Row index exceeded board dimension");
-                        }
-                    } else {
-                        Console.WriteLine("Invalid row number");
-                    }
-                } else {
-                    Console.WriteLine("First input character must be a letter indcating column");
-                }
-            }
+					if (position != null && isLetter(position[0].ToString())) {
+						positionY = (int) position[0] - 65;
+						if (positionY >= 10) {
+							positionY = -1;
+							Console.WriteLine("Column index exceeded board dimension");
+						}
+						if (position.Substring(1) != "" && isNumeric(position.Substring(1))) {
+							positionX = Int32.Parse(position.Substring(1)) - 1;
+							if (positionX >= 10) {
+								positionX = -1;
+								Console.WriteLine("Row index exceeded board dimension");
+							}
+						} else {
+							Console.WriteLine("Invalid row number");
+						}
+					} else {
+						Console.WriteLine("First input character must be a letter indcating column");
+					}
+				}
+			}
+			else if(type == PlayerType.AI) {
+				int positionX = random.Next(10);
+				int positionY = random.Next(10);
+				
+
+			}
 
             int[] positionInput = new int[2] { positionX, positionY };
 
             return positionInput;
-
         }
-
+		
+		
 		public static bool isNumeric(string strToCheck) {
             Regex rg = new Regex(@"^[0-9\s,]*$");
             return rg.IsMatch(strToCheck);
@@ -81,10 +88,10 @@ namespace battle_ships {
         }
 		
 
-		public bool DebugPutShip(Square.Mark type, bool isShipHorizontal){
+		public bool DebugPutShip(Square.Mark type, bool isShipHorizontal, int[] position) {
 
-			int positionX = random.Next(10);
-			int positionY = random.Next(10);
+			int positionX = position[0];
+			int positionY = position[1];
 			int initx = positionX;
 			int inity = positionY;
 			int size = Square.GetOccupiedSquares(type);
