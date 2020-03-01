@@ -37,9 +37,11 @@ namespace battle_ships {
 			}
 		}
 		public int[] GetShipPosition(PlayerType type, string playerInput) {
+			int positionX = 0;
+			int positionY = 0;
 			if (type == PlayerType.HUMAN) {
-				int positionX = -1;
-				int positionY = -1;
+				positionX = -1;
+				positionY = -1;
 				while (positionX == -1 || positionY == -1) {
 					Console.WriteLine("Position:");
 					string position = Console.ReadLine().ToUpper();
@@ -65,8 +67,8 @@ namespace battle_ships {
 				}
 			}
 			else if(type == PlayerType.AI) {
-				int positionX = random.Next(10);
-				int positionY = random.Next(10);
+				positionX = random.Next(10);
+				positionY = random.Next(10);
 				
 
 			}

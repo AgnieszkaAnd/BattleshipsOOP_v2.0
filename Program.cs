@@ -6,11 +6,16 @@ using System.Threading;
 namespace battle_ships {
     class Program
     {
+		public enum Status {START, GAME_P_VS_P, GAME_P_VS_AI, EXIT }
         static void Main(string[] args) {
-
+			var playersNamesInitial = new List<string> { "Player1", "Player2" };
+            var playersObjects = new Player[2];
 			bool theGameIsOver = false;
+			string[] shipnames = Enum.GetNames(typeof(Square.Mark));
 			Status gameStatus = Status.START;
-			//public enum Status {START, GAME_P_VS_P, GAME_P_VS_AI, EXIT }
+			bool isHorizontal;
+			int[] position;
+
 			while (!theGameIsOver) {
 
 				switch (gameStatus) {
@@ -24,15 +29,62 @@ namespace battle_ships {
 										"\t3) EXIT GAME\n");
 						string choice = Console.ReadLine();
 						if (choice == "1") {
-							Game.Status = Status.GAME_P_VS_P; }
+							gameStatus = Status.GAME_P_VS_P; }
 						else if (choice == "2") {
-							Game.Status = Status.GAME_P_VS_AI; }
+							gameStatus = Status.GAME_P_VS_AI; }
 						else if (choice == "3") {
-							Game.Status = Status.EXIT; }
+							gameStatus = Status.EXIT; }
 						else {
-							Console.WriteLine("Choose a right option from menu.")}
+							Console.WriteLine("Choose a right option from menu.");}
 						break;
-					}
+
+					case Status.GAME_P_VS_P:
+						foreach (string player in playersNamesInitial) {
+                            Console.Clear();
+                            Console.WriteLine($"\nPlease tell me {player} name: ");
+                            int index = playersNamesInitial.IndexOf(player);
+                            playersObjects[index] = new Player(Console.ReadLine(), PlayerType.HUMAN);
+                            Console.WriteLine($"{player} - put your ships on the board\n" +
+                            "The other player - please step out!!");
+                            Thread.Sleep(3000);
+                            Ship.displayShipTypes();
+
+							//string[] shipnames = Enum.GetNames(typeof(Square.Mark));
+							for( int i = 0; i < 5; i++ ) {
+								Console.WriteLine($"Please place: {shipnames[i]}");
+								bool shipPlaced = false;
+								while (shipPlaced == false) {
+									isHorizontal = Ship.IsShipHorizontal(PlayerType.HUMAN);
+									position = Ocean.GetShipPosition(PlayerType.HUMAN);
+									shipPlaced = playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CARRIER, isHorizontal, position);
+									
+								}
+
+								/*
+								playersObjects[index].MyOcean.DebugPutShip(Enum.TryParse(typeof(Square.Mark), shipnames[i]));
+								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CARRIER, isHorizontal));
+								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.BATTLESHIP, isHorizontal));
+								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CRUISER, isHorizontal));
+								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.SUBMARINE, isHorizontal));
+								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.DESTROYER, isHorizontal));
+								*/
+								
+							}
+                        }
+						
+
+						break;
+
+					case Status.GAME_P_VS_AI:
+						Console.Clear();
+						Console.WriteLine();
+						break;
+					
+					case Status.EXIT:
+						Console.Clear();
+						Console.WriteLine();
+						break;
+				}
 			}
 		}
 		

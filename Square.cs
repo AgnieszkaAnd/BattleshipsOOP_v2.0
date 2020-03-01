@@ -4,6 +4,7 @@ using System.Text;
 
 namespace battle_ships {
     class Square {
+		public string shipLayout;
     	private Square.Mark Front;
 		private Square.Mark Back;
 		public enum Mark {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER, WATER, MISSED, HIT, NOT_SET, SUNK}
@@ -62,5 +63,8 @@ namespace battle_ships {
 			}
 			return -1;
 		}
+
+
+		
     }
 }
