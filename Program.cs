@@ -50,7 +50,6 @@ namespace battle_ships {
                             Thread.Sleep(3000);
                             Ship.displayShipTypes();
 
-							//string[] shipnames = Enum.GetNames(typeof(Square.Mark));
 							for( int i = 0; i < 5; i++ ) {
 								Console.WriteLine($"Please place: {shipNames[i]}");
 								bool shipPlaced = false;
@@ -64,13 +63,11 @@ namespace battle_ships {
 								System.Console.WriteLine();
 							}
                         }
-						
-
 						break;
 
 					case Status.GAME_P_VS_AI:
 						Console.Clear();
-						Console.WriteLine();
+						System.Console.WriteLine();
 						break;
 					
 					case Status.EXIT:
