@@ -11,7 +11,8 @@ namespace battle_ships {
 			var playersNamesInitial = new List<string> { "Player1", "Player2" };
             var playersObjects = new Player[2];
 			bool theGameIsOver = false;
-			string[] shipnames = Enum.GetNames(typeof(Square.Mark));
+			string[] shipNames = Enum.GetNames(typeof(Square.Mark));
+			Square.Mark[] shipTypes = (Square.Mark[])Enum.GetValues(typeof(Square.Mark));
 			Status gameStatus = Status.START;
 			bool isHorizontal;
 			int[] position;
@@ -51,24 +52,16 @@ namespace battle_ships {
 
 							//string[] shipnames = Enum.GetNames(typeof(Square.Mark));
 							for( int i = 0; i < 5; i++ ) {
-								Console.WriteLine($"Please place: {shipnames[i]}");
+								Console.WriteLine($"Please place: {shipNames[i]}");
 								bool shipPlaced = false;
 								while (shipPlaced == false) {
 									isHorizontal = Ship.IsShipHorizontal(PlayerType.HUMAN);
 									position = Ocean.GetShipPosition(PlayerType.HUMAN);
-									shipPlaced = playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CARRIER, isHorizontal, position);
-									
+									shipPlaced = playersObjects[index].MyOcean.DebugPutShip(shipTypes[i], isHorizontal, position);
 								}
-
-								/*
-								playersObjects[index].MyOcean.DebugPutShip(Enum.TryParse(typeof(Square.Mark), shipnames[i]));
-								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CARRIER, isHorizontal));
-								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.BATTLESHIP, isHorizontal));
-								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.CRUISER, isHorizontal));
-								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.SUBMARINE, isHorizontal));
-								while(!playersObjects[index].MyOcean.DebugPutShip(Square.Mark.DESTROYER, isHorizontal));
-								*/
-								
+								System.Console.WriteLine();
+								playersObjects[index].MyOcean.DebugOcean();
+								System.Console.WriteLine();
 							}
                         }
 						

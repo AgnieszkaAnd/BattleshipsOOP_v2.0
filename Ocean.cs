@@ -8,7 +8,7 @@ using System.Threading;
 namespace battle_ships {
 	
     class Ocean {
-    	private Random random = new Random();
+    	private static Random random = new Random();
 		private Square[,] Board = new Square[10,10];
 		public Ocean(){
 			for(int x = 0; x<10; x++){
@@ -36,7 +36,7 @@ namespace battle_ships {
 				Console.WriteLine("");
 			}
 		}
-		public int[] GetShipPosition(PlayerType type, string playerInput) {
+		public static int[] GetShipPosition(PlayerType type) {
 			int positionX = 0;
 			int positionY = 0;
 			if (type == PlayerType.HUMAN) {
