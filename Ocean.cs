@@ -31,7 +31,7 @@ namespace battle_ships {
 					Console.Write(" "+(y)+"|");
 				}
 				for (int x = 0; x < 10; x++){
-					Console.Write(Board[x,y].Draw()+"|");
+					Console.Write(Board[x,y].DrawBack()+"|");
 				}
 				Console.WriteLine("");
 			}
