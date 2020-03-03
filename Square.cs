@@ -25,7 +25,7 @@ namespace battle_ships {
 			this.Front = Mark.WATER;
 			this.Back = Mark.NOT_SET;
 		}
-		public char Draw(){
+		public char DrawBack() {
 			switch(this.Back){
 				case Mark.CARRIER:
 					return 'C';
@@ -37,6 +37,12 @@ namespace battle_ships {
 					return 's';
 				case Mark.DESTROYER:
 					return 'd';
+			}
+			return ' ';
+		}
+
+		public char DrawFront() {
+			switch(this.Front) {
 				case Mark.WATER:
 					return '~';
 				case Mark.HIT:
@@ -48,6 +54,7 @@ namespace battle_ships {
 			}
 			return ' ';
 		}
+		
 		public static int GetOccupiedSquares(Square.Mark type){
 			switch(type){
 				case Mark.CARRIER:
