@@ -30,6 +30,7 @@ namespace battle_ships {
 				}
 				System.Console.WriteLine();
 				playersObjects[index].MyOcean.DebugOceanBack();
+				Thread.Sleep(5000);
 				System.Console.WriteLine();
 			}
 		}
@@ -44,7 +45,7 @@ namespace battle_ships {
 				"The other player - please step out!!");
 				Thread.Sleep(3000);
 			} else {
-				playersObjectsArray[playerIndex] = new Player(Console.ReadLine(), type);
+				playersObjectsArray[playerIndex] = new Player("Great AI player", type);
 			}
 			return playerIndex;
 		}
@@ -79,6 +80,7 @@ namespace battle_ships {
                             Ship.displayShipTypes();
 							PlaceShips(playerIndex, PlayerType.HUMAN);
                         }
+						// HERE WE MUST FINALLY CHANGE GAME STATUS - otherwise case will rerun
 						break;
 
 					case Status.GAME_P_VS_AI:
@@ -89,6 +91,7 @@ namespace battle_ships {
 						// CREATE AI PLAYER
 						var index2 = PlayerSetUp(playersNamesInitial[1], playersNamesInitial, playersObjects, PlayerType.AI);
 						PlaceShips(index2, PlayerType.AI);
+						// HERE WE MUST FINALLY CHANGE GAME STATUS - otherwise case will rerun
 						break;
 					
 					case Status.EXIT:
