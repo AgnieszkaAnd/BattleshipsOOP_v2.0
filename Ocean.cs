@@ -17,7 +17,7 @@ namespace battle_ships {
 				}
 			}
 		}
-		public void DebugOcean(){
+		public void DebugOceanBack(){
 			
 			// Console.WriteLine("  |A|B|C|D|E|F|G|H|I|J|");
 			Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
@@ -36,6 +36,29 @@ namespace battle_ships {
 				Console.WriteLine("");
 			}
 		}
+
+		public void DebugOceanFront(){
+			
+			// Console.WriteLine("  |A|B|C|D|E|F|G|H|I|J|");
+			Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
+
+			for(int y = 0; y < 10; y++){
+				if(y<9){
+					// Console.Write(" "+(y+1)+"|");
+					Console.Write(" "+(y)+"|");
+				} else {
+					// Console.Write((y+1)+"|");
+					Console.Write(" "+(y)+"|");
+				}
+				for (int x = 0; x < 10; x++){
+					Console.Write(Board[x,y].DrawFront()+"|");
+				}
+				Console.WriteLine("");
+			}
+		}
+
+
+
 		public static int[] GetShipPosition(PlayerType type) {
 			int positionX = 0;
 			int positionY = 0;
