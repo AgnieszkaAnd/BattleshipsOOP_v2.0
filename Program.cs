@@ -1,3 +1,4 @@
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -16,31 +17,36 @@ namespace battle_ships {
 		static bool isHorizontal;
 		static int[] position;
 
-		static void PlaceShips(int index) {
+		static void PlaceShips(int index, PlayerType type) {
 			for( int i = 0; i < 5; i++ ) {
+				System.Console.WriteLine("Your current ocean:");
+				playersObjects[index].MyOcean.DebugOceanBack();
 				Console.WriteLine($"Please place: {shipNames[i]}");
 				bool shipPlaced = false;
 				while (shipPlaced == false) {
-					isHorizontal = Ship.IsShipHorizontal(PlayerType.HUMAN);
-					position = Ocean.GetShipPosition(PlayerType.HUMAN);
+					isHorizontal = Ship.IsShipHorizontal(type);
+					position = Ocean.GetShipPosition(type);
 					shipPlaced = playersObjects[index].MyOcean.DebugPutShip(shipTypes[i], isHorizontal, position);
 				}
 				System.Console.WriteLine();
-				playersObjects[index].MyOcean.DebugOcean();
+				playersObjects[index].MyOcean.DebugOceanBack();
 				System.Console.WriteLine();
 			}
 		}
 		
-		static int PlayerSetUp(string player) {
+		static int PlayerSetUp(string player, List<string> playersNamesArray, Player[] playersObjectsArray, PlayerType type) {
+			int playerIndex = playersNamesArray.IndexOf(player);
 			Console.Clear();
-			Console.WriteLine($"\nPlease tell me {player} name: ");
-			int index = playersNamesInitial.IndexOf(player);
-			playersObjects[index] = new Player(Console.ReadLine(), PlayerType.HUMAN);
-			Console.WriteLine($"{player} - put your ships on the board\n" +
-			"The other player - please step out!!");
-			Thread.Sleep(3000);
-
-			return index;
+			if (type == PlayerType.HUMAN) {
+				Console.WriteLine($"\nPlease tell me {player} name: ");
+				playersObjectsArray[playerIndex] = new Player(Console.ReadLine(), type);
+				Console.WriteLine($"{player} - put your ships on the board\n" +
+				"The other player - please step out!!");
+				Thread.Sleep(3000);
+			} else {
+				playersObjectsArray[playerIndex] = new Player(Console.ReadLine(), type);
+			}
+			return playerIndex;
 		}
 
         static void Main(string[] args) {
@@ -69,37 +75,29 @@ namespace battle_ships {
 
 					case Status.GAME_P_VS_P:
 						foreach (string player in playersNamesInitial) {
-                            var index = PlayerSetUp(player);
+                            var playerIndex = PlayerSetUp(player, playersNamesInitial, playersObjects, PlayerType.HUMAN);
                             Ship.displayShipTypes();
-							PlaceShips(index);
+							PlaceShips(playerIndex, PlayerType.HUMAN);
                         }
 						break;
 
 					case Status.GAME_P_VS_AI:
-						var index = PlayerSetUp(player);
+						// CREATE HUMAN PLAYER
+						var index = PlayerSetUp(playersNamesInitial[0], playersNamesInitial, playersObjects, PlayerType.HUMAN);
                         Ship.displayShipTypes();
-						PlaceShips(index);
-
+						PlaceShips(index, PlayerType.HUMAN);
+						// CREATE AI PLAYER
+						var index2 = PlayerSetUp(playersNamesInitial[1], playersNamesInitial, playersObjects, PlayerType.AI);
+						PlaceShips(index2, PlayerType.AI);
 						break;
 					
 					case Status.EXIT:
 						Console.Clear();
 						Console.WriteLine();
+						theGameIsOver = true;
 						break;
 				}
 			}
 		}
-		
-
-		/*var TestOcean = new Ocean();
-		while(!TestOcean.DebugPutRandomlyShip(Square.Mark.CARRIER));
-		while(!TestOcean.DebugPutRandomlyShip(Square.Mark.BATTLESHIP));
-		while(!TestOcean.DebugPutRandomlyShip(Square.Mark.CRUISER));
-		while(!TestOcean.DebugPutRandomlyShip(Square.Mark.SUBMARINE));
-		while(!TestOcean.DebugPutRandomlyShip(Square.Mark.DESTROYER));
-		
-		TestOcean.DebugOcean();
-		*/
-        
 	}
 }
