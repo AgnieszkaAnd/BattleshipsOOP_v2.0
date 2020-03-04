@@ -9,7 +9,13 @@ namespace battle_ships {
 	
     class Ocean {
     	private static Random random = new Random();
-		private Square[,] Board = new Square[10,10];
+		public int shotsToCarrier = Square.GetOccupiedSquares(Square.Mark.CARRIER);
+		public int shotsToBattleship = Square.GetOccupiedSquares(Square.Mark.BATTLESHIP);
+		public int shotsToCruiser = Square.GetOccupiedSquares(Square.Mark.CRUISER);
+		public int shotsToSubmarine = Square.GetOccupiedSquares(Square.Mark.SUBMARINE);
+		public int shotsToDestroyer = Square.GetOccupiedSquares(Square.Mark.DESTROYER);
+		public bool allShipsSunk = false;
+		public Square[,] Board = new Square[10,10];
 		public Ocean(){
 			for(int x = 0; x<10; x++){
 				for(int y = 0; y<10; y++){
@@ -69,7 +75,7 @@ namespace battle_ships {
 					Console.WriteLine("Position:");
 					string position = Console.ReadLine().ToUpper();
 
-					if (position != null && isLetter(position[0].ToString())) {
+					if (position != "" && isLetter(position[0].ToString())) {
 						positionY = (int) position[0] - 65;
 						if (positionY >= 10) {
 							positionY = -1;
@@ -175,6 +181,29 @@ namespace battle_ships {
 					return false;
 			}
 			return true;
+		}
+
+		public void updateAfterHit(Square.Mark shipType) {
+			if (shipType == Square.Mark.CARRIER) {shotsToCarrier--;}
+			else if (shipType == Square.Mark.BATTLESHIP) {shotsToBattleship--;}
+			else if (shipType == Square.Mark.CRUISER) {shotsToCruiser--;}
+			else if (shipType == Square.Mark.SUBMARINE) {shotsToSubmarine--;}
+			else if (shipType == Square.Mark.DESTROYER) {shotsToDestroyer--;}
+		}
+
+		public bool verifyIfSunk(Square.Mark shipType) {
+			if (shipType == Square.Mark.CARRIER) {return shotsToCarrier == 0;}
+			else if (shipType == Square.Mark.BATTLESHIP) {return shotsToBattleship == 0;}
+			else if (shipType == Square.Mark.CRUISER) {return shotsToCruiser == 0;}
+			else if (shipType == Square.Mark.SUBMARINE) {return shotsToSubmarine == 0;}
+			else if (shipType == Square.Mark.DESTROYER) {return shotsToDestroyer == 0;}
+			return false;
+		}
+
+		public bool verifyAllShipsSunk() {
+			if (shotsToCarrier == 0 && shotsToBattleship == 0 && shotsToCruiser == 0
+				&& shotsToSubmarine == 0 && shotsToDestroyer == 0) { return true; }
+			return false;
 		}
 	}
 }

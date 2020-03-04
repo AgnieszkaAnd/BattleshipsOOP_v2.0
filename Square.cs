@@ -7,9 +7,19 @@ namespace battle_ships {
 		public string shipLayout;
     	private Square.Mark Front;
 		private Square.Mark Back;
+		public bool hasBeenShot;
 		public enum Mark {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER, WATER, MISSED, HIT, NOT_SET, SUNK}
 		public void setVisible(){
 			this.Front = this.Back;
+		}
+		public Square.Mark GetFront(){
+			return this.Front;
+		}
+		public void SetFront(Square.Mark value){
+			this.Front = value;
+		}
+		public Square.Mark GetMark(){
+			return this.Back;
 		}
 		public void SetMark(Square.Mark value){
 			this.Back = value;
@@ -24,6 +34,7 @@ namespace battle_ships {
 		public Square(){
 			this.Front = Mark.WATER;
 			this.Back = Mark.NOT_SET;
+			this.hasBeenShot = false;
 		}
 		public char DrawBack() {
 			switch(this.Back){

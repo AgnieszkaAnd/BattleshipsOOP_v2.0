@@ -18,9 +18,9 @@ namespace battle_ships {
 		static int[] position;
 
 		static void PlaceShips(int index, PlayerType type) {
+			System.Console.WriteLine("Your current ocean:");
+			playersObjects[index].MyOcean.DebugOceanBack();
 			for( int i = 0; i < 5; i++ ) {
-				System.Console.WriteLine("Your current ocean:");
-				playersObjects[index].MyOcean.DebugOceanBack();
 				Console.WriteLine($"Please place: {shipNames[i]}");
 				bool shipPlaced = false;
 				while (shipPlaced == false) {
@@ -30,7 +30,6 @@ namespace battle_ships {
 				}
 				System.Console.WriteLine();
 				playersObjects[index].MyOcean.DebugOceanBack();
-				Thread.Sleep(5000);
 				System.Console.WriteLine();
 			}
 		}
@@ -48,6 +47,61 @@ namespace battle_ships {
 				playersObjectsArray[playerIndex] = new Player("Great AI player", type);
 			}
 			return playerIndex;
+		}
+
+		static bool ShootToShip(Player[] players) {
+			int j, x, y;
+			bool allShipsSunk = false;
+			Square currentShot;
+			for (int i = 0; i < 2; i++) {
+				if (i==0) {j = 1;} else {j = 0;}
+
+				// PRINT FRONT OF ENEMY'S OCEAN
+				Console.Clear();
+				System.Console.WriteLine($"{players[i].Name} is shooting");
+				players[j].MyOcean.DebugOceanFront();
+				// GET POSITION FROM SHOOTING PLAYER
+				Console.WriteLine("Tell me where do you want to shoot");
+				position = Ocean.GetShipPosition(players[i].Type);
+				x = position[1];
+				y = position[0];
+				// CHECK IF SHOOT IS HIT/MISS
+				currentShot = players[j].MyOcean.Board[x, y];
+				if (currentShot.hasBeenShot == false) {
+					currentShot.hasBeenShot = true;
+					if (currentShot.GetMark() != Square.Mark.NOT_SET) {
+						currentShot.SetFront(Square.Mark.HIT);
+						System.Console.WriteLine("You got it! :D HIT");
+						Thread.Sleep(3000);
+						Square.Mark shipType = currentShot.GetMark();
+						players[j].MyOcean.updateAfterHit(shipType);
+						if (players[j].MyOcean.verifyAllShipsSunk()) {
+							allShipsSunk = true;
+							Console.Clear();
+							Thread.Sleep(1000);
+							System.Console.WriteLine($"{players[i].Name} - YOU WON! CONGRATS!");
+							Thread.Sleep(5000);
+							return allShipsSunk;
+						}
+						else if (players[j].MyOcean.verifyIfSunk(shipType) == true) {
+							System.Console.WriteLine($"You shot {shipType}");
+							Thread.Sleep(3000);
+							for(int row = 0; row<10; row++){
+								for(int col = 0; col<10; col++){
+									if (players[j].MyOcean.Board[row, col].GetMark() == shipType) {
+										players[j].MyOcean.Board[row, col].SetFront(Square.Mark.SUNK);
+									}
+								}
+							}
+						}
+					} else {
+						currentShot.SetFront(Square.Mark.MISSED);
+						System.Console.WriteLine("Oh no... MISS but do not worry, you will have another chance");
+						Thread.Sleep(3000);
+					}
+				}
+			}
+			return allShipsSunk;
 		}
 
         static void Main(string[] args) {
@@ -81,6 +135,12 @@ namespace battle_ships {
 							PlaceShips(playerIndex, PlayerType.HUMAN);
                         }
 						// HERE WE MUST FINALLY CHANGE GAME STATUS - otherwise case will rerun
+						bool allShipsSunk = false;
+						while (!allShipsSunk) {
+							Console.Clear();
+							allShipsSunk = ShootToShip(playersObjects);
+						}
+						gameStatus = Status.START;
 						break;
 
 					case Status.GAME_P_VS_AI:
