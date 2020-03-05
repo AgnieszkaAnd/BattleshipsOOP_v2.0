@@ -104,6 +104,10 @@ namespace battle_ships {
 			return allShipsSunk;
 		}
 
+		public static void CenterAlign(string text) {
+		    Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (text.Length / 2)) + "}", text));
+		}
+
         static void Main(string[] args) {
 
 			while (!theGameIsOver) {
@@ -112,11 +116,18 @@ namespace battle_ships {
 
 					case Status.START:
 						Console.Title = "BATTLESHIP";
-						Console.WriteLine("Welcome to Battleship!\n\n");
-						Console.WriteLine("MENU:\n" + 
-										"\t1) PLAYER VS PLAYER\n" +
-										"\t2) PLAYER VS AI\n" +
-										"\t3) EXIT GAME\n");
+						CenterAlign("Welcome to Battleship!"); 
+						System.Console.WriteLine("\n\n");
+						CenterAlign("MENU:"); 
+						System.Console.WriteLine();
+						CenterAlign("1) PLAYER VS PLAYER");
+						CenterAlign("2) PLAYER VS AI");
+						CenterAlign("3) EXIT GAME");
+						// Console.WriteLine("Welcome to Battleship!\n\n");
+						// Console.WriteLine("MENU:\n" + 
+						// 				"\t1) PLAYER VS PLAYER\n" +
+						// 				"\t2) PLAYER VS AI\n" +
+						// 				"\t3) EXIT GAME\n");
 						string choice = Console.ReadLine();
 						if (choice == "1") {
 							gameStatus = Status.GAME_P_VS_P; }
