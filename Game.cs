@@ -33,5 +33,32 @@ namespace battle_ships {
 		// 		System.Console.WriteLine();
 		//	}
 		//}
+
+
+	// 	                            You keeping us on course,
+    //                                    Little buddy?           \
+
+    //   Yes, Skipper \                       __________________________
+
+		public static void StartScreenDisplay(int textShift) {
+			System.Console.WriteLine("\t\tYou keeping us on course, Little buddy?");
+			System.Console.WriteLine("\t\t\t\t\t\t\t\t\t\t\tYes, Skipper");
+			// Console.SetCursorPosition(textShift, (Console.WindowHeight/2));
+			string[] shipASCII = {
+				"              |    |    |",
+				"             )_)  )_)  )_)",
+				"            )___))___))___)",
+				"           )____)____)_____)",
+				"        _____|____|____|____\\__",
+				"--------\\                   /---------",
+				"  ^^^^^ ^^^^^^^^^^^^^^^^^^^^^",
+				"    ^^^^      ^^^^     ^^^    ^^",
+				"         ^^^^      ^^^"
+			};
+			foreach (string shipLine in shipASCII) {
+				Console.SetCursorPosition(textShift, Console.CursorTop);
+				System.Console.WriteLine(shipLine);
+			}
+		}
 	}
 }

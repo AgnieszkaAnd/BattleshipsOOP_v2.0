@@ -116,6 +116,11 @@ namespace battle_ships {
 
 					case Status.START:
 						Console.Title = "BATTLESHIP";
+						for (int i = Console.WindowWidth - 50; i >= 0; i--) {
+							Console.Clear();
+							Game.StartScreenDisplay(i);
+							Thread.Sleep(20);
+						}
 						CenterAlign("Welcome to Battleship!"); 
 						System.Console.WriteLine("\n\n");
 						CenterAlign("MENU:"); 

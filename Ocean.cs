@@ -24,8 +24,7 @@ namespace battle_ships {
 			}
 		}
 		public void DebugOceanBack(){
-			string temp = "";
-			Program.CenterAlign("  |A|B|C|D|E|F|G|H|I|J|");
+			Program.CenterAlign("   |A|B|C|D|E|F|G|H|I|J|");
 			// Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
 			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 
@@ -48,14 +47,17 @@ namespace battle_ships {
 
 		public void DebugOceanFront(){
 			
-			Console.WriteLine("  |A|B|C|D|E|F|G|H|I|J|");
+			Program.CenterAlign("   |A|B|C|D|E|F|G|H|I|J|");
 			// Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
+			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 
 			for(int y = 0; y < 10; y++){
 				if(y<9){
+					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write(" "+(y+1)+"|");
 					// Console.Write(" "+(y)+"|");
 				} else {
+					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write((y+1)+"|");
 					// Console.Write(" "+(y)+"|");
 				}
