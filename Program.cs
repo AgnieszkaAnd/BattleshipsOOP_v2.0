@@ -58,7 +58,7 @@ namespace battle_ships {
 
 				// PRINT FRONT OF ENEMY'S OCEAN
 				Console.Clear();
-				System.Console.WriteLine($"{players[i].Name} is shooting");
+				System.Console.WriteLine($"{players[i].Name} - {players[i].Type} is shooting");
 				players[j].MyOcean.DebugOceanFront();
 				// GET POSITION FROM SHOOTING PLAYER
 				Console.WriteLine("Tell me where do you want to shoot");
@@ -152,6 +152,12 @@ namespace battle_ships {
 						var index2 = PlayerSetUp(playersNamesInitial[1], playersNamesInitial, playersObjects, PlayerType.AI);
 						PlaceShips(index2, PlayerType.AI);
 						// HERE WE MUST FINALLY CHANGE GAME STATUS - otherwise case will rerun
+						bool allShipsSunkAI = false;
+						while (!allShipsSunkAI) {
+							Console.Clear();
+							allShipsSunkAI = ShootToShip(playersObjects);
+						}
+						gameStatus = Status.START;
 						break;
 					
 					case Status.EXIT:
