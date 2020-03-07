@@ -5,18 +5,12 @@ using System.Text;
 namespace battle_ships {
     class Square {
 		public string shipLayout;
-    	private Square.Mark Front;
+    	public Square.Mark Front { get; set;}
 		private Square.Mark Back;
 		public bool hasBeenShot;
 		public enum Mark {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER, WATER, MISSED, HIT, NOT_SET, SUNK}
 		public void setVisible(){
 			this.Front = this.Back;
-		}
-		public Square.Mark GetFront(){
-			return this.Front;
-		}
-		public void SetFront(Square.Mark value){
-			this.Front = value;
 		}
 		public Square.Mark GetMark(){
 			return this.Back;
@@ -27,10 +21,6 @@ namespace battle_ships {
 		public bool IsAvailable(){
 			return this.Back == Mark.NOT_SET;
 		}
-		/*
-		public bool IsVisible(){
-			return this.Visible;
-		}*/
 		public Square(){
 			this.Front = Mark.WATER;
 			this.Back = Mark.NOT_SET;
@@ -81,8 +71,5 @@ namespace battle_ships {
 			}
 			return -1;
 		}
-
-
-		
     }
 }

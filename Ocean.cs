@@ -24,19 +24,16 @@ namespace battle_ships {
 			}
 		}
 		public void DebugOceanBack(){
-			Program.CenterAlign("   |A|B|C|D|E|F|G|H|I|J|");
-			// Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
+			Program.CenterAlign("  |A|B|C|D|E|F|G|H|I|J|");
 			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 
 			for(int y = 0; y < 10; y++){
 				if(y<9){
 					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write(" "+(y+1)+"|");
-					// Console.Write(" "+(y)+"|");
 				} else {
 					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write((y+1)+"|");
-					// Console.Write(" "+(y)+"|");
 				}
 				for (int x = 0; x < 10; x++){
 					Console.Write(Board[x,y].DrawBack()+"|");
@@ -47,19 +44,16 @@ namespace battle_ships {
 
 		public void DebugOceanFront(){
 			
-			Program.CenterAlign("   |A|B|C|D|E|F|G|H|I|J|");
-			// Console.WriteLine("  |0|1|2|3|4|5|6|7|8|9|");
+			Program.CenterAlign("  |A|B|C|D|E|F|G|H|I|J|");
 			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 
 			for(int y = 0; y < 10; y++){
 				if(y<9){
 					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write(" "+(y+1)+"|");
-					// Console.Write(" "+(y)+"|");
 				} else {
 					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write((y+1)+"|");
-					// Console.Write(" "+(y)+"|");
 				}
 				for (int x = 0; x < 10; x++){
 					Console.Write(Board[x,y].DrawFront()+"|");
@@ -67,8 +61,6 @@ namespace battle_ships {
 				Console.WriteLine("");
 			}
 		}
-
-
 
 		public static int[] GetShipPosition(PlayerType type) {
 			int positionX = 0;
@@ -103,8 +95,6 @@ namespace battle_ships {
 			else if(type == PlayerType.AI) {
 				positionX = random.Next(10);
 				positionY = random.Next(10);
-				
-
 			}
 
             int[] positionInput = new int[2] { positionX, positionY };
@@ -178,8 +168,6 @@ namespace battle_ships {
 			}
 			return true;
 		}
-
-		
 
 		private static bool IsInsideBoard(int boardSize, int xMin, int yMin, int xMax, int yMax) {
 			if (xMin < 0 || yMin < 0 || xMax > boardSize || yMax > boardSize) {

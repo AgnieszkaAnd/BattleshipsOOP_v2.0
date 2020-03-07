@@ -70,7 +70,7 @@ namespace battle_ships {
 				if (currentShot.hasBeenShot == false) {
 					currentShot.hasBeenShot = true;
 					if (currentShot.GetMark() != Square.Mark.NOT_SET) {
-						currentShot.SetFront(Square.Mark.HIT);
+						currentShot.Front = Square.Mark.HIT;
 						System.Console.WriteLine("You got it! :D HIT");
 						Thread.Sleep(3000);
 						Square.Mark shipType = currentShot.GetMark();
@@ -89,13 +89,13 @@ namespace battle_ships {
 							for(int row = 0; row<10; row++){
 								for(int col = 0; col<10; col++){
 									if (players[j].MyOcean.Board[row, col].GetMark() == shipType) {
-										players[j].MyOcean.Board[row, col].SetFront(Square.Mark.SUNK);
+										players[j].MyOcean.Board[row, col].Front = Square.Mark.SUNK;
 									}
 								}
 							}
 						}
 					} else {
-						currentShot.SetFront(Square.Mark.MISSED);
+						currentShot.Front = Square.Mark.MISSED;
 						System.Console.WriteLine("Oh no... MISS but do not worry, you will have another chance");
 						Thread.Sleep(3000);
 					}
@@ -111,7 +111,8 @@ namespace battle_ships {
         static void Main(string[] args) {
 
 			while (!theGameIsOver) {
-
+			Console.BackgroundColor = ConsoleColor.White;
+			Console.ForegroundColor = ConsoleColor.DarkMagenta;
 				switch (gameStatus) {
 
 					case Status.START:
