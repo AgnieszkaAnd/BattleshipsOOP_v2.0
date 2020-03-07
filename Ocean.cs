@@ -16,6 +16,7 @@ namespace battle_ships {
 		public int shotsToDestroyer = Square.GetOccupiedSquares(Square.Mark.DESTROYER);
 		public bool allShipsSunk = false;
 		public Square[,] Board = new Square[10,10];
+		private string boardColumnsNames = "  |A|B|C|D|E|F|G|H|I|J|";
 		public Ocean(){
 			for(int x = 0; x<10; x++){
 				for(int y = 0; y<10; y++){
@@ -23,40 +24,22 @@ namespace battle_ships {
 				}
 			}
 		}
-		public void DebugOceanBack(){
-			Program.CenterAlign("  |A|B|C|D|E|F|G|H|I|J|");
-			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
+		public void DrawOcean(string frontOrBack){
+			Program.CenterAlign(this.boardColumnsNames);
 
 			for(int y = 0; y < 10; y++){
+				Console.SetCursorPosition((Console.WindowWidth - this.boardColumnsNames.Length) / 2, Console.CursorTop);
 				if(y<9){
-					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write(" "+(y+1)+"|");
 				} else {
-					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
 					Console.Write((y+1)+"|");
 				}
 				for (int x = 0; x < 10; x++){
-					Console.Write(Board[x,y].DrawBack()+"|");
-				}
-				Console.WriteLine("");
-			}
-		}
-
-		public void DebugOceanFront(){
-			
-			Program.CenterAlign("  |A|B|C|D|E|F|G|H|I|J|");
-			Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
-
-			for(int y = 0; y < 10; y++){
-				if(y<9){
-					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
-					Console.Write(" "+(y+1)+"|");
-				} else {
-					Console.SetCursorPosition((Console.WindowWidth - "  |A|B|C|D|E|F|G|H|I|J|".Length) / 2, Console.CursorTop);
-					Console.Write((y+1)+"|");
-				}
-				for (int x = 0; x < 10; x++){
-					Console.Write(Board[x,y].DrawFront()+"|");
+					if (frontOrBack.ToUpper() == "BACK") {
+						Console.Write(Board[x,y].DrawBack()+"|");
+					} else {
+						Console.Write(Board[x,y].DrawFront()+"|");
+					}
 				}
 				Console.WriteLine("");
 			}

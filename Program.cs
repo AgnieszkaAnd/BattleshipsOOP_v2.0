@@ -19,7 +19,7 @@ namespace battle_ships {
 
 		static void PlaceShips(int index, PlayerType type) {
 			System.Console.WriteLine("Your current ocean:");
-			playersObjects[index].MyOcean.DebugOceanBack();
+			playersObjects[index].MyOcean.DrawOcean("BACK");
 			for( int i = 0; i < 5; i++ ) {
 				Console.WriteLine($"Please place: {shipNames[i]}");
 				bool shipPlaced = false;
@@ -29,7 +29,7 @@ namespace battle_ships {
 					shipPlaced = playersObjects[index].MyOcean.DebugPutShip(shipTypes[i], isHorizontal, position);
 				}
 				System.Console.WriteLine();
-				playersObjects[index].MyOcean.DebugOceanBack();
+				playersObjects[index].MyOcean.DrawOcean("BACK");
 				System.Console.WriteLine();
 			}
 		}
@@ -59,7 +59,7 @@ namespace battle_ships {
 				// PRINT FRONT OF ENEMY'S OCEAN
 				Console.Clear();
 				System.Console.WriteLine($"{players[i].Name} - {players[i].Type} is shooting");
-				players[j].MyOcean.DebugOceanFront();
+				players[j].MyOcean.DrawOcean("FRONT");
 				// GET POSITION FROM SHOOTING PLAYER
 				Console.WriteLine("Tell me where do you want to shoot");
 				position = Ocean.GetShipPosition(players[i].Type);
