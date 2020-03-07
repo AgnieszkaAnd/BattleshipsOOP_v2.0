@@ -69,11 +69,11 @@ namespace battle_ships {
 				currentShot = players[j].MyOcean.Board[x, y];
 				if (currentShot.hasBeenShot == false) {
 					currentShot.hasBeenShot = true;
-					if (currentShot.GetMark() != Square.Mark.NOT_SET) {
+					if (currentShot.Back != Square.Mark.NOT_SET) {
 						currentShot.Front = Square.Mark.HIT;
 						System.Console.WriteLine("You got it! :D HIT");
 						Thread.Sleep(3000);
-						Square.Mark shipType = currentShot.GetMark();
+						Square.Mark shipType = currentShot.Back;
 						players[j].MyOcean.updateAfterHit(shipType);
 						if (players[j].MyOcean.verifyAllShipsSunk()) {
 							allShipsSunk = true;
@@ -88,7 +88,7 @@ namespace battle_ships {
 							Thread.Sleep(3000);
 							for(int row = 0; row<10; row++){
 								for(int col = 0; col<10; col++){
-									if (players[j].MyOcean.Board[row, col].GetMark() == shipType) {
+									if (players[j].MyOcean.Board[row, col].Back == shipType) {
 										players[j].MyOcean.Board[row, col].Front = Square.Mark.SUNK;
 									}
 								}

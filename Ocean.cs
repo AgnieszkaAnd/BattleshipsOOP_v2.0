@@ -159,11 +159,11 @@ namespace battle_ships {
 
 			if(isShipHorizontal){
 				for(int cx = initx; cx<size+initx; cx++){
-					Board[cx, inity].SetMark(type);
+					Board[cx, inity].Back = type;
 				}
 			} else {
 				for(int cy = inity; cy<size+inity; cy++){
-					Board[initx, cy].SetMark(type);
+					Board[initx, cy].Back  = type;
 				}
 			}
 			return true;
